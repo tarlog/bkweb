@@ -246,6 +246,7 @@
         <div class="txt" data-edit="${i}">
           <div class="t">${esc(p.title)}</div>
           <div class="m">${esc([p.medium, p.width && p.height ? `${p.width}×${p.height} ${p.unit}` : '', p.year, p.status].filter(Boolean).join(' · '))}</div>
+          ${p.keywords?.length ? `<div class="m">${esc(p.keywords.join(', '))}</div>` : ''}
         </div>
         <div class="ord">
           <button data-move="-1" ${i === 0 ? 'disabled' : ''} aria-label="Move up">&#9650;</button>
@@ -255,6 +256,25 @@
     const mediums = [...new Set(paintings.map((p) => p.medium).filter(Boolean))];
     $('#mediums').innerHTML = mediums.map((m) => `<option value="${esc(m)}">`).join('');
   }
+
+  // ---------- Keywords ----------
+  const parseKeywords = (s) => [...new Map(String(s).split(',').map((k) => k.trim()).filter(Boolean)
+    .map((k) => [k.toLowerCase(), k])).values()];
+  const allKeywords = () => [...new Set(paintings.flatMap((p) => p.keywords || []))].sort((a, b) => a.localeCompare(b));
+  function renderKeywordSuggestions() {
+    const input = $('#form-edit').elements.keywords;
+    const have = new Set(parseKeywords(input.value).map((k) => k.toLowerCase()));
+    $('#kw-suggest').innerHTML = allKeywords().filter((k) => !have.has(k.toLowerCase()))
+      .map((k) => `<button type="button" class="chip" data-kw="${esc(k)}">+ ${esc(k)}</button>`).join('');
+  }
+  $('#kw-suggest').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-kw]');
+    if (!b) return;
+    const input = $('#form-edit').elements.keywords;
+    input.value = [...parseKeywords(input.value), b.dataset.kw].join(', ');
+    renderKeywordSuggestions();
+  });
+  $('#form-edit').elements.keywords.addEventListener('input', renderKeywordSuggestions);
   $('#list').addEventListener('click', (e) => {
     const ed = e.target.closest('[data-edit]');
     if (ed) return openEdit(paintings[+ed.dataset.edit]);
@@ -285,6 +305,8 @@
     f.reset();
     for (const k of ['title', 'medium', 'width', 'height', 'year', 'status', 'description']) f.elements[k].value = p?.[k] ?? '';
     f.unit.value = p?.unit || 'cm';
+    f.elements.keywords.value = (p?.keywords || []).join(', ');
+    renderKeywordSuggestions();
     const img = $('#edit-preview');
     img.hidden = !p; $('#edit-noimg').hidden = !!p;
     if (p) img.src = thumbSrc(p);
@@ -320,6 +342,7 @@
       unit: f.unit.value,
       description: f.description.value.trim(),
       status: f.status.value.trim(),
+      keywords: parseKeywords(f.elements.keywords.value),
     };
     run(async () => {
       const id = editing?.id || `${slug(fields.title)}-${stamp()}`;

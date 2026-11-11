@@ -59,3 +59,6 @@ button.link { background: none; border: 0; text-decoration: underline; }
   background: #222; color: #fff; padding: 12px 18px; border-radius: 8px; max-width: 90vw; font-size: 14px;
 }
 .toast.err { background: var(--danger); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: -4px; }
+.chips:empty { display: none; }
+.chip { padding: 6px 10px; border-radius: 999px; font-size: 13px; background: #f4f1ec; }

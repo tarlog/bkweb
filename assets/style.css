@@ -1,19 +1,19 @@
 :root {
-  --bg: #faf8f5;
+  --bg: #f6f3ee;
   --fg: #222;
-  --muted: #777;
+  --muted: #7a736b;
   --accent: #8a5a3b;
-  --row-h: 260px;
-  --gap: 12px;
+  --stage-h: min(58vh, 620px);
   font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; background: var(--bg); color: var(--fg); }
 a { color: var(--accent); }
+[hidden] { display: none !important; }
 
-.site-header { text-align: center; padding: 48px 16px 24px; }
+.site-header { text-align: center; padding: 40px 16px 12px; }
 .site-header h1 { margin: 0; font-weight: 400; font-size: clamp(28px, 5vw, 44px); letter-spacing: .04em; }
-.tagline { margin: 6px 0 18px; color: var(--muted); font-style: italic; }
+.tagline { margin: 6px 0 16px; color: var(--muted); font-style: italic; }
 .site-header nav a {
   margin: 0 12px; text-decoration: none; color: var(--fg);
   font-size: 14px; letter-spacing: .15em; text-transform: uppercase;
@@ -21,73 +21,91 @@ a { color: var(--accent); }
 }
 .site-header nav a.active { border-color: var(--fg); }
 
-main { max-width: 1400px; margin: 0 auto; padding: 0 var(--gap) 40px; }
+main { margin: 0 auto; padding-bottom: 32px; }
 
-/* Justified rows: each tile grows proportional to its aspect ratio, nothing is cropped. */
-.gallery { display: flex; flex-wrap: wrap; gap: var(--gap); }
-.gallery::after { content: ""; flex-grow: 1e4; }
-.tile {
-  position: relative; display: block; cursor: zoom-in; overflow: hidden;
-  background: #eee; border: 0; padding: 0;
-  flex-grow: var(--ar); flex-basis: calc(var(--ar) * var(--row-h));
+/* ---------- Keyword filter ---------- */
+.filters {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+  max-width: 1000px; margin: 8px auto 4px; padding: 0 16px;
 }
-.tile::before { content: ""; display: block; padding-top: calc(100% / var(--ar)); }
-.tile img {
-  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  transition: transform .4s ease, opacity .4s; opacity: 0;
+.filters:empty { display: none; }
+.chip {
+  font: inherit; font-size: 14px; cursor: pointer; color: var(--fg);
+  background: transparent; border: 1px solid #d6cec3; border-radius: 999px; padding: 5px 13px;
+  transition: background .2s, color .2s, border-color .2s;
 }
-.tile img.loaded { opacity: 1; }
-.tile:hover img { transform: scale(1.03); }
-.tile .cap {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 24px 12px 10px;
-  color: #fff; font-size: 15px; text-align: left;
-  background: linear-gradient(transparent, rgba(0,0,0,.55));
-  opacity: 0; transition: opacity .3s;
+.chip:hover { border-color: var(--fg); }
+.chip[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.chip:disabled { opacity: .35; cursor: default; border-color: #d6cec3; }
+.chip small { color: inherit; opacity: .6; margin-left: 3px; }
+
+/* ---------- Carousel ---------- */
+.stage {
+  position: relative; height: var(--stage-h); margin: 12px 0 0; overflow: hidden;
+  perspective: 1400px; touch-action: pan-y; user-select: none; -webkit-user-select: none; outline: none;
 }
-.tile:hover .cap, .tile:focus-visible .cap { opacity: 1; }
-.tile .badge {
-  position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,.9);
-  color: var(--fg); font-size: 11px; padding: 3px 7px; letter-spacing: .08em; text-transform: uppercase;
+.track { position: absolute; inset: 0; transform-style: preserve-3d; }
+.slide {
+  position: absolute; left: 50%; top: 50%; margin: 0; padding: 0; border: 0; background: #e8e2d9;
+  cursor: pointer; will-change: transform;
+  transition: transform .55s cubic-bezier(.2,.7,.2,1), filter .55s, opacity .55s;
+  box-shadow: 0 18px 40px rgba(40,30,20,.28), 0 2px 6px rgba(40,30,20,.18);
 }
-@media (max-width: 600px) {
-  :root { --row-h: 160px; --gap: 6px; }
-  .tile .cap { opacity: 1; font-size: 13px; padding: 16px 8px 6px; }
+.slide.center { cursor: zoom-in; }
+.dragging .slide { transition: none; }
+.slide img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
+.c-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 500;
+  width: 48px; height: 48px; border-radius: 50%; border: 0; cursor: pointer;
+  background: rgba(255,255,255,.75); color: var(--fg); font-size: 30px; line-height: 44px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.15); transition: opacity .2s, background .2s;
+}
+.c-nav:hover { background: #fff; }
+.c-nav:disabled { opacity: 0; pointer-events: none; }
+.c-prev { left: 16px; }
+.c-next { right: 16px; }
+
+/* ---------- Info under the carousel ---------- */
+.info { max-width: 640px; margin: 18px auto 0; padding: 0 20px; text-align: center; transition: opacity .25s; }
+.info.fade { opacity: 0; }
+.counter { margin: 0; color: var(--muted); font-size: 13px; letter-spacing: .12em; }
+.info h2 { font-weight: 400; font-size: 26px; margin: 6px 0 6px; }
+.meta { margin: 0; color: var(--muted); }
+.desc { line-height: 1.6; white-space: pre-line; margin: 12px 0; }
+.tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0; }
+.tags .chip { font-size: 13px; padding: 3px 10px; }
+.empty { text-align: center; color: var(--muted); margin: 80px 16px; }
+.linkbtn { font: inherit; background: none; border: 0; color: var(--accent); text-decoration: underline; cursor: pointer; }
+
+@media (max-width: 700px) {
+  :root { --stage-h: min(58vh, 90vw); }
+  .filters { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .filters::-webkit-scrollbar { display: none; }
+  .filters .chip { flex: none; }
+  .c-nav { display: none; }
+  .site-header { padding-top: 28px; }
+  .info h2 { font-size: 22px; }
 }
 
-.about { max-width: 680px; margin: 0 auto; font-size: 18px; line-height: 1.7; white-space: pre-line; }
-
+.about { max-width: 680px; margin: 24px auto; padding: 0 20px; font-size: 18px; line-height: 1.7; white-space: pre-line; }
 .site-footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px; }
 
-/* Viewer */
+/* ---------- Full-screen viewer ---------- */
 .viewer {
-  position: fixed; inset: 0; z-index: 10; background: rgba(20,18,16,.96); color: #eee;
-  display: flex; align-items: center; justify-content: center;
+  position: fixed; inset: 0; z-index: 1000; background: rgba(20,18,16,.97);
+  display: flex; align-items: center; justify-content: center; padding: 48px 12px;
 }
-.viewer[hidden] { display: none; }
-.v-figure {
-  margin: 0; width: 100%; height: 100%; display: flex; gap: 32px;
-  align-items: center; justify-content: center; padding: 56px 72px;
-}
-.v-img-wrap { flex: 1 1 auto; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center; }
-.v-img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
-.v-info { flex: 0 0 300px; }
-.v-info h2 { font-weight: 400; margin: 0 0 8px; font-size: 26px; }
-.v-meta { color: #aaa; margin: 0 0 16px; line-height: 1.6; }
-.v-desc { line-height: 1.6; white-space: pre-line; }
+.viewer img { max-width: 100%; max-height: 100%; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
 .v-close, .v-nav {
   position: absolute; background: none; border: 0; color: #ddd; cursor: pointer;
-  font-size: 44px; line-height: 1; padding: 8px 14px; z-index: 2;
+  font-size: 44px; line-height: 1; padding: 8px 14px;
 }
-.v-close { top: 6px; right: 10px; }
+.v-close { top: 4px; right: 8px; }
 .v-prev { left: 4px; top: 50%; transform: translateY(-50%); }
 .v-next { right: 4px; top: 50%; transform: translateY(-50%); }
 .v-close:hover, .v-nav:hover { color: #fff; }
+@media (max-width: 700px) { .v-nav { display: none; } }
 
-@media (max-width: 900px) {
-  .v-figure { flex-direction: column; padding: 52px 12px 16px; gap: 12px; overflow-y: auto; justify-content: flex-start; }
-  .v-img-wrap { flex: 0 0 auto; height: auto; max-height: 70vh; width: 100%; }
-  .v-img-wrap img { max-height: 70vh; }
-  .v-info { flex: none; width: 100%; max-width: 600px; padding: 0 8px; }
-  .v-nav { top: auto; bottom: 8px; transform: none; font-size: 36px; }
-  .v-nav { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .slide, .info { transition: none; }
 }

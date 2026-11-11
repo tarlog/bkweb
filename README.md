@@ -4,7 +4,7 @@ A fully static website for GitHub Pages, plus a mobile admin app for adding pain
 
 ```
 index.html, assets/        Public gallery (no build step, no server)
-data/paintings.json        All painting data (title, medium, size, year, description, status)
+data/paintings.json        All painting data (title, medium, size, year, description, status, keywords)
 data/site.json             Artist name, tagline, about text, contact email
 images/full/               Viewing images: max 1600 px, JPEG ~76-78% (~300 KB)
 images/thumb/              Gallery thumbnails: max 600 px (~50 KB)
@@ -26,7 +26,7 @@ Open `https://<username>.github.io/<repo>/admin/` on the phone.
   *Share* a photo from the Gallery app straight to “Gallery Admin”.
 * **iPhone (Safari):** Share button → *Add to Home Screen*.
 
-What it does: take or choose a photo → fill in title, medium, size, year, status and description →
+What it does: take or choose a photo → fill in title, medium, size, year, status, keywords and description →
 **Save & publish**. It resizes the photo, commits the image, thumbnail and updated `paintings.json` to
 GitHub in a single commit, and GitHub Pages republishes the site within a minute or two. You can also
 edit, delete and reorder paintings, and edit the artist name/about text (✎ button).

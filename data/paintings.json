@@ -13,7 +13,12 @@
       "image": "images/full/rocky-shore.jpg",
       "thumb": "images/thumb/rocky-shore.jpg",
       "imageWidth": 1600,
-      "imageHeight": 1212
+      "imageHeight": 1212,
+      "keywords": [
+        "sea",
+        "landscape",
+        "rocks"
+      ]
     },
     {
       "id": "lone-tree",
@@ -28,7 +33,12 @@
       "image": "images/full/lone-tree.jpg",
       "thumb": "images/thumb/lone-tree.jpg",
       "imageWidth": 1600,
-      "imageHeight": 1184
+      "imageHeight": 1184,
+      "keywords": [
+        "trees",
+        "water",
+        "landscape"
+      ]
     },
     {
       "id": "beach-day",
@@ -43,7 +53,13 @@
       "image": "images/full/beach-day.jpg",
       "thumb": "images/thumb/beach-day.jpg",
       "imageWidth": 1600,
-      "imageHeight": 1051
+      "imageHeight": 1051,
+      "keywords": [
+        "sea",
+        "beach",
+        "people",
+        "summer"
+      ]
     },
     {
       "id": "riverside-branches",
@@ -58,7 +74,12 @@
       "image": "images/full/riverside-branches.jpg",
       "thumb": "images/thumb/riverside-branches.jpg",
       "imageWidth": 1600,
-      "imageHeight": 1160
+      "imageHeight": 1160,
+      "keywords": [
+        "trees",
+        "water",
+        "river"
+      ]
     }
   ]
 }

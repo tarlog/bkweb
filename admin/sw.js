@@ -1,6 +1,6 @@
 // Service worker: makes the admin installable, caches the app shell,
 // and receives photos shared from the phone's gallery (Android).
-const SHELL = 'admin-shell-v1';
+const SHELL = 'admin-shell-v2';
 const FILES = ['./', 'index.html', 'admin.css', 'admin.js', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png'];
 
 self.addEventListener('install', (e) => {

@@ -19,25 +19,36 @@
   </header>
 
   <main>
-    <section id="gallery" class="gallery" aria-label="Paintings"></section>
+    <section id="gallery" aria-label="Paintings">
+      <div id="filters" class="filters" role="group" aria-label="Filter by keyword"></div>
+
+      <div id="stage" class="stage" tabindex="0" aria-roledescription="carousel" aria-label="Paintings carousel">
+        <div id="track" class="track"></div>
+        <button class="c-nav c-prev" aria-label="Previous painting">&#8249;</button>
+        <button class="c-nav c-next" aria-label="Next painting">&#8250;</button>
+      </div>
+
+      <div id="info" class="info" aria-live="polite">
+        <p id="counter" class="counter"></p>
+        <h2 id="i-title"></h2>
+        <p id="i-meta" class="meta"></p>
+        <p id="i-desc" class="desc"></p>
+        <p id="i-tags" class="tags"></p>
+      </div>
+      <p id="empty" class="empty" hidden>No paintings match these keywords. <button class="linkbtn" data-clear>Show all</button></p>
+    </section>
+
     <section id="about" class="about" hidden>
       <p id="about-text"></p>
       <p id="contact"></p>
     </section>
   </main>
 
-  <div id="viewer" class="viewer" hidden role="dialog" aria-modal="true" aria-labelledby="v-title">
+  <div id="viewer" class="viewer" hidden role="dialog" aria-modal="true" aria-label="Full size painting">
     <button class="v-close" aria-label="Close">&times;</button>
     <button class="v-nav v-prev" aria-label="Previous">&#8249;</button>
     <button class="v-nav v-next" aria-label="Next">&#8250;</button>
-    <figure class="v-figure">
-      <div class="v-img-wrap"><img id="v-img" alt=""></div>
-      <figcaption class="v-info">
-        <h2 id="v-title"></h2>
-        <p id="v-meta" class="v-meta"></p>
-        <p id="v-desc" class="v-desc"></p>
-      </figcaption>
-    </figure>
+    <img id="v-img" alt="">
   </div>
 
   <footer class="site-footer"><span id="copy"></span></footer>
