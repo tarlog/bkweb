@@ -36,7 +36,6 @@
         <p id="i-meta" class="meta"></p>
         <p id="i-desc" class="desc"></p>
         <p id="i-tags" class="tags"></p>
-        <p><button id="i-wall" class="wallbtn">See it on your wall</button></p>
       </div>
       <p id="empty" class="empty" hidden>No paintings match these keywords. <button class="linkbtn" data-clear>Show all</button></p>
     </section>
@@ -51,7 +50,10 @@
     <button class="v-close" aria-label="Close">&times;</button>
     <button class="v-nav v-prev" aria-label="Previous">&#8249;</button>
     <button class="v-nav v-next" aria-label="Next">&#8250;</button>
-    <img id="v-img" alt="">
+    <div class="v-frame">
+      <img id="v-img" alt="">
+      <button id="v-wall" class="wallbtn">See it on your wall</button>
+    </div>
   </div>
 
   <div id="room" class="room" hidden role="dialog" aria-modal="true" aria-label="See the painting on your wall">

@@ -284,7 +284,7 @@
     document.body.style.overflow = '';
     if (idx !== window.gallery.pos) window.gallery.go(idx);
   }
-  $('#i-wall').addEventListener('click', open);
+  $('#v-wall').addEventListener('click', open);
   $('.r-close').addEventListener('click', close);
   document.addEventListener('keydown', (e) => {
     if (room.hidden || e.target.closest?.('input, select')) return;
