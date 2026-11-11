@@ -1,6 +1,21 @@
 {
   "paintings": [
     {
+      "id": "bellevue-mwcj353s",
+      "title": "Bellevue",
+      "year": 2026,
+      "medium": "",
+      "width": null,
+      "height": null,
+      "unit": "cm",
+      "description": "",
+      "status": "",
+      "image": "images/full/bellevue-mwcj353s-mwcj353s.jpg",
+      "thumb": "images/thumb/bellevue-mwcj353s-mwcj353s.jpg",
+      "imageWidth": 1205,
+      "imageHeight": 1600
+    },
+    {
       "id": "rocky-shore",
       "title": "Rocky Shore",
       "year": 2017,
