@@ -1,0 +1,64 @@
+{
+  "paintings": [
+    {
+      "id": "rocky-shore",
+      "title": "Rocky Shore",
+      "year": 2017,
+      "medium": "Oil on canvas",
+      "width": 40,
+      "height": 30,
+      "unit": "cm",
+      "description": "Turquoise sea under a pale sky, with a small boat drifting past the rocks.",
+      "status": "",
+      "image": "images/full/rocky-shore.jpg",
+      "thumb": "images/thumb/rocky-shore.jpg",
+      "imageWidth": 1600,
+      "imageHeight": 1212
+    },
+    {
+      "id": "lone-tree",
+      "title": "Lone Tree",
+      "year": 2017,
+      "medium": "Oil on canvas",
+      "width": 40,
+      "height": 30,
+      "unit": "cm",
+      "description": "A single tree standing in the water, painted in thick impasto strokes.",
+      "status": "",
+      "image": "images/full/lone-tree.jpg",
+      "thumb": "images/thumb/lone-tree.jpg",
+      "imageWidth": 1600,
+      "imageHeight": 1184
+    },
+    {
+      "id": "beach-day",
+      "title": "Beach Day",
+      "year": 2017,
+      "medium": "Oil on canvas",
+      "width": 45,
+      "height": 30,
+      "unit": "cm",
+      "description": "Umbrellas and bathers on a summer beach below the hills.",
+      "status": "",
+      "image": "images/full/beach-day.jpg",
+      "thumb": "images/thumb/beach-day.jpg",
+      "imageWidth": 1600,
+      "imageHeight": 1051
+    },
+    {
+      "id": "riverside-branches",
+      "title": "Riverside Branches",
+      "year": 2017,
+      "medium": "Watercolor on paper",
+      "width": 42,
+      "height": 30,
+      "unit": "cm",
+      "description": "Branches leaning over a misty river.",
+      "status": "",
+      "image": "images/full/riverside-branches.jpg",
+      "thumb": "images/thumb/riverside-branches.jpg",
+      "imageWidth": 1600,
+      "imageHeight": 1160
+    }
+  ]
+}

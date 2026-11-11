@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Paintings</title>
+  <meta name="description" content="Paintings gallery">
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1 id="artist-name">&nbsp;</h1>
+    <p id="tagline" class="tagline"></p>
+    <nav>
+      <a href="#" data-nav="gallery">Gallery</a>
+      <a href="#about" data-nav="about">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="gallery" class="gallery" aria-label="Paintings"></section>
+    <section id="about" class="about" hidden>
+      <p id="about-text"></p>
+      <p id="contact"></p>
+    </section>
+  </main>
+
+  <div id="viewer" class="viewer" hidden role="dialog" aria-modal="true" aria-labelledby="v-title">
+    <button class="v-close" aria-label="Close">&times;</button>
+    <button class="v-nav v-prev" aria-label="Previous">&#8249;</button>
+    <button class="v-nav v-next" aria-label="Next">&#8250;</button>
+    <figure class="v-figure">
+      <div class="v-img-wrap"><img id="v-img" alt=""></div>
+      <figcaption class="v-info">
+        <h2 id="v-title"></h2>
+        <p id="v-meta" class="v-meta"></p>
+        <p id="v-desc" class="v-desc"></p>
+      </figcaption>
+    </figure>
+  </div>
+
+  <footer class="site-footer"><span id="copy"></span></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>

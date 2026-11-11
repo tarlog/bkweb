@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#3b2f2a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Gallery Admin">
+  <title>Gallery Admin</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="bar">
+    <button id="btn-back" class="icon" hidden aria-label="Back">&#8592;</button>
+    <h1 id="bar-title">Gallery Admin</h1>
+    <span class="spacer"></span>
+    <button id="btn-site" class="icon" hidden aria-label="Site settings" title="Site settings">&#9998;</button>
+    <button id="btn-settings" class="icon" hidden aria-label="Connection settings" title="Connection">&#9881;</button>
+  </header>
+
+  <!-- Connect -->
+  <section id="view-connect" class="view" hidden>
+    <form id="form-connect" class="card">
+      <p class="hint">Connect to the GitHub repository that hosts the website.
+        You need a <b>fine-grained personal access token</b> with access to this repository only and
+        <b>Contents: Read and write</b> permission. See the README for step-by-step instructions.</p>
+      <label>Repository owner <input name="owner" required autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+      <label>Repository name <input name="repo" required autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+      <label>Branch <input name="branch" value="main" required autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+      <label>Access token <input name="token" type="password" required autocomplete="off" placeholder="github_pat_…"></label>
+      <button class="primary" type="submit">Connect</button>
+      <button class="link danger" type="button" id="btn-disconnect" hidden>Forget token on this device</button>
+    </form>
+  </section>
+
+  <!-- List -->
+  <section id="view-list" class="view" hidden>
+    <div class="list-head">
+      <a id="site-link" target="_blank" rel="noopener">Open website &#8599;</a>
+      <button class="primary" id="btn-add">+ Add painting</button>
+    </div>
+    <ul id="list" class="list"></ul>
+    <p id="list-empty" class="hint center" hidden>No paintings yet. Tap “Add painting”.</p>
+  </section>
+
+  <!-- Edit -->
+  <section id="view-edit" class="view" hidden>
+    <form id="form-edit" class="card">
+      <div class="photo">
+        <img id="edit-preview" alt="" hidden>
+        <div id="edit-noimg" class="noimg">No photo selected</div>
+      </div>
+      <div class="row">
+        <label class="btn">Take photo<input type="file" accept="image/*" capture="environment" data-photo hidden></label>
+        <label class="btn">Choose from gallery<input type="file" accept="image/*" data-photo hidden></label>
+      </div>
+      <p id="photo-info" class="hint"></p>
+      <label>Title * <input name="title" required></label>
+      <label>Medium / materials <input name="medium" list="mediums" placeholder="Oil on canvas"></label>
+      <datalist id="mediums"></datalist>
+      <div class="row">
+        <label>Width <input name="width" type="number" inputmode="decimal" step="any" min="0"></label>
+        <label>Height <input name="height" type="number" inputmode="decimal" step="any" min="0"></label>
+        <label>Unit
+          <select name="unit"><option>cm</option><option>in</option><option>mm</option></select>
+        </label>
+      </div>
+      <div class="row">
+        <label>Year <input name="year" type="number" inputmode="numeric" min="1900" max="2100"></label>
+        <label>Status <input name="status" list="statuses" placeholder="e.g. Sold"></label>
+        <datalist id="statuses"><option>Available</option><option>Sold</option><option>Private collection</option></datalist>
+      </div>
+      <label>Description <textarea name="description" rows="4"></textarea></label>
+      <button class="primary" type="submit">Save &amp; publish</button>
+      <button class="link danger" type="button" id="btn-delete" hidden>Delete painting</button>
+    </form>
+  </section>
+
+  <!-- Site -->
+  <section id="view-site" class="view" hidden>
+    <form id="form-site" class="card">
+      <label>Artist name <input name="artistName"></label>
+      <label>Tagline <input name="tagline"></label>
+      <label>About <textarea name="about" rows="8"></textarea></label>
+      <label>Contact email <input name="email" type="email"></label>
+      <button class="primary" type="submit">Save &amp; publish</button>
+    </form>
+  </section>
+
+  <div id="busy" class="busy" hidden><div class="spinner"></div><p id="busy-text">Working…</p></div>
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
