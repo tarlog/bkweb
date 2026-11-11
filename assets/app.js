@@ -280,7 +280,7 @@
 
   // ---------- Keyboard ----------
   document.addEventListener('keydown', (e) => {
-    if ($('#gallery').hidden || e.target.closest?.('input, textarea')) return;
+    if ($('#gallery').hidden || document.body.classList.contains('room-open') || e.target.closest?.('input, textarea')) return;
     if (!viewer.hidden && e.key === 'Escape') return hideViewer();
     if (e.key === 'ArrowRight') { e.preventDefault(); go(pos + 1); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); go(pos - 1); }
@@ -290,5 +290,8 @@
   });
 
   window.addEventListener('hashchange', () => { route(); layout(); });
+  // Used by room.js ("See it on your wall").
+  window.gallery = { get list() { return list; }, get pos() { return pos; }, go };
+
   load().catch((err) => { $('#empty').hidden = false; $('#empty').textContent = 'Could not load paintings.'; console.error(err); });
 })();

@@ -11,6 +11,16 @@ images/thumb/              Gallery thumbnails: max 600 px (~50 KB)
 admin/                     Mobile admin app (installable Progressive Web App)
 ```
 
+## "See it on your wall"
+
+Visitors can open any painting on a photo of their own room (or a sample room), move and resize it, pick a
+frame, and save the result to their device. With **Set real scale** they mark an object of known length
+(e.g. a door) and the painting is shown at its true size, using the width/height from `paintings.json`.
+
+Privacy: the room photo is decoded locally in the browser (`assets/room.js`) and never uploaded or stored.
+The public page also sets a Content-Security-Policy (`connect-src 'self'`, `form-action 'none'`) so the
+browser itself blocks any attempt to send data to another site.
+
 ## Image quality policy
 
 Every image is resized to at most **1600 px** on the long edge and re-encoded as JPEG (quality ~78).

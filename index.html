@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Paintings</title>
   <meta name="description" content="Paintings gallery">
+  <!-- The page may only talk to its own site: visitors' wall photos can never be sent anywhere. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <link rel="icon" href="favicon.png">
   <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -34,6 +36,7 @@
         <p id="i-meta" class="meta"></p>
         <p id="i-desc" class="desc"></p>
         <p id="i-tags" class="tags"></p>
+        <p><button id="i-wall" class="wallbtn">See it on your wall</button></p>
       </div>
       <p id="empty" class="empty" hidden>No paintings match these keywords. <button class="linkbtn" data-clear>Show all</button></p>
     </section>
@@ -51,7 +54,48 @@
     <img id="v-img" alt="">
   </div>
 
+  <div id="room" class="room" hidden role="dialog" aria-modal="true" aria-label="See the painting on your wall">
+    <div class="r-bar">
+      <strong id="r-title"></strong>
+      <span class="r-spacer"></span>
+      <button class="r-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="r-canvas-wrap">
+      <canvas id="r-canvas"></canvas>
+      <p id="r-hint" class="r-hint"></p>
+      <form id="r-cal" class="r-cal" hidden>
+        <label>Length of the line you drew
+          <span><input id="r-cal-len" type="number" inputmode="decimal" min="1" step="any" required> cm</span>
+        </label>
+        <button type="submit">Apply</button>
+        <button type="button" data-cal-cancel>Cancel</button>
+      </form>
+    </div>
+    <div class="r-tools">
+      <label class="r-btn">Use my photo<input id="r-file" type="file" accept="image/*" hidden></label>
+      <button class="r-btn" id="r-sample">Sample room</button>
+      <span class="r-group">
+        <button class="r-btn" id="r-prev" aria-label="Previous painting">&#8249;</button>
+        <button class="r-btn" id="r-next" aria-label="Next painting">&#8250;</button>
+      </span>
+      <label class="r-field">Size <input id="r-size" type="range" min="2" max="95" step="0.5"></label>
+      <label class="r-field">Frame
+        <select id="r-frame">
+          <option value="none">None</option>
+          <option value="black">Thin black</option>
+          <option value="wood">Wood</option>
+          <option value="mat">White mat</option>
+        </select>
+      </label>
+      <button class="r-btn" id="r-cal-btn">Set real scale</button>
+      <button class="r-btn" id="r-real" hidden>Real size</button>
+      <button class="r-btn" id="r-save">Save picture</button>
+    </div>
+    <p class="r-privacy">Your photo stays in this browser. It is never uploaded or stored on the website.</p>
+  </div>
+
   <footer class="site-footer"><span id="copy"></span></footer>
   <script src="assets/app.js"></script>
+  <script src="assets/room.js"></script>
 </body>
 </html>
